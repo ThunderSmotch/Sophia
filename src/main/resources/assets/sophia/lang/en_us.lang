@@ -1,0 +1,6 @@
+tile.sophia.iron_furnace.name=Iron Furnace
+######CONFIG
+config.config_enabled=Is Config Enabled?
+config.config_enabled.tooltip=Set to false if you don't like this config.
+config.player_name=Player Name
+config.player_name.tooltip=Set your player name here.
