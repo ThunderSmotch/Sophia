@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sophia",
+  "name": "Sophia",
+  "description": "Discovering...",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ThunderSmotch"],
+  "credits": "ThunderSmotch",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
