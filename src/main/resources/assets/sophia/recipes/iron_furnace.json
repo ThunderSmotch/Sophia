@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "sophia:iron_furnace"
+  },
+  "pattern": [
+    " c ",
+    "iFi",
+    " i "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "type": "forge:ore_dict", "ore": "dyeWhite"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  }
+}

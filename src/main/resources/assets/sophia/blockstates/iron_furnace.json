@@ -1,13 +1,26 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "cube_all",
+    "model": "cube",
     "textures": {
-      "all": "sophia:blocks/iron_furnace"
+      "north": "sophia:blocks/iron_furnace",
+      "south": "sophia:blocks/iron_furnace_side",
+      "west": "sophia:blocks/iron_furnace_side",
+      "east": "sophia:blocks/iron_furnace_side",
+      "up": "sophia:blocks/iron_furnace_up",
+      "down": "sophia:blocks/iron_furnace_down"
     }
   },
   "variants": {
     "normal": [{}],
-    "inventory": [{}]
+    "inventory": [{}],
+    "facing": {
+      "north": {},
+      "south": {"y": 180},
+      "west": {"y": 270},
+      "east":{"y": 90},
+      "up": {"x": -90},
+      "down":{"x": 90}
+    }
   }
 }

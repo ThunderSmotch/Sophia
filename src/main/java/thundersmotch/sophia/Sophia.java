@@ -28,7 +28,7 @@ public class Sophia
 
     public static Logger logger; //For logging things
 
-    public static CreativeTabs creativeTab = new CreativeTabs("Sophia") {
+    public static CreativeTabs creativeTab = new CreativeTabs("sophia") {
         @Override
         public ItemStack getTabIconItem() {return new ItemStack(ModBlocks.blockIronFurnace);}
     };
