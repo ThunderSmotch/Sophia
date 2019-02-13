@@ -5,8 +5,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import thundersmotch.sophia.container.ContainerIronFurnace;
-import thundersmotch.sophia.tile.TileIronFurnace;
+import thundersmotch.sophia.block.iron_furnace.ContainerIronFurnace;
+import thundersmotch.sophia.block.iron_furnace.GuiIronFurnace;
+import thundersmotch.sophia.block.iron_furnace.TileIronFurnace;
 
 import javax.annotation.Nullable;
 

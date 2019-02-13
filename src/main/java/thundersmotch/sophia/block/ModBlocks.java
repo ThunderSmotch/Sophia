@@ -5,6 +5,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thundersmotch.sophia.block.iron_furnace.BlockIronFurnace;
 
 public class ModBlocks {
 

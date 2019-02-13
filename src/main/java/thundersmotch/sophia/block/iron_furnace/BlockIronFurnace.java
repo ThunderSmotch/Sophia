@@ -1,4 +1,4 @@
-package thundersmotch.sophia.block;
+package thundersmotch.sophia.block.iron_furnace;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -15,14 +15,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
 import thundersmotch.sophia.Sophia;
-import thundersmotch.sophia.tile.TileIronFurnace;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockIronFurnace extends Block implements ITileEntityProvider {
 
@@ -80,5 +84,25 @@ public class BlockIronFurnace extends Block implements ITileEntityProvider {
 
         playerIn.openGui(Sophia.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Optional.Method(modid = "waila")
+    public List<String> getWailaBody(List<String> tooltip, IWailaDataAccessor accessor){
+        TileEntity te = accessor.getTileEntity();
+        if (te instanceof TileIronFurnace){
+            TileIronFurnace furnace = (TileIronFurnace) te;
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+                tooltip.add("SHIFTADO!");
+            }
+
+            tooltip.add(TextFormatting.GREEN + "Progress: " + furnace.getClientProgress() + "%");
+
+            //TODO fix this when packets are implemented cuz client cannot read the current energy stored!
+            tooltip.add(TextFormatting.YELLOW + "Energy: " + "TODO" + "/" + TileIronFurnace.MAX_POWER + " FE");
+            tooltip.add("A faster furnace!");
+        }
+        return tooltip;
     }
 }

@@ -1,18 +1,24 @@
-package thundersmotch.sophia.container;
+package thundersmotch.sophia.block.iron_furnace;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import thundersmotch.sophia.tile.TileIronFurnace;
+import thundersmotch.sophia.network.Messages;
+import thundersmotch.sophia.network.PacketSyncPower;
+import thundersmotch.sophia.tools.IEnergyContainer;
 
-public class ContainerIronFurnace extends Container {
+public class ContainerIronFurnace extends Container implements IEnergyContainer {
 
     private TileIronFurnace te;
+
+    private static final int PROGRESS_ID = 0;
 
     public ContainerIronFurnace(IInventory playerInventory, TileIronFurnace te){
         this.te = te;
@@ -87,5 +93,38 @@ public class ContainerIronFurnace extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
         return te.canInteractWith(entityPlayer);
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        if(te.getProgress() != te.getClientProgress()){
+            te.setClientProgress(te.getProgress());
+            for (IContainerListener listener: listeners){
+                listener.sendWindowProperty(this, PROGRESS_ID, te.getProgress());
+            }
+        }
+
+        if(te.getEnergy() != te.getClientEnergy()){
+            te.setClientEnergy(te.getEnergy());
+            for (IContainerListener listener: listeners){
+                if (listener instanceof EntityPlayerMP){
+                    EntityPlayerMP player = (EntityPlayerMP) listener;
+                    Messages.INSTANCE.sendTo(new PacketSyncPower(te.getEnergy()), player);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateProgressBar(int id, int data) {
+        if (id == PROGRESS_ID){
+            te.setClientProgress(data);
+        }
+    }
+
+    @Override
+    public void syncPower(int energy) {
+        te.setClientEnergy(energy);
     }
 }

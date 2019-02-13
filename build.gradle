@@ -21,6 +21,7 @@ repositories{
     	name = "ModMaven"
     	url = "modmaven.k-4u.nl"
 	}
+    maven {url "http://tehnut.info/maven"}
 }
 
 version = "0.1"
@@ -40,6 +41,7 @@ minecraft {
 }
 
 dependencies {
+    deobfCompile "mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2"
 	// compile against the JEI API but do not include it at runtime
 	deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
   	// at runtime, use the full JEI jar
