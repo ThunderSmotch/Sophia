@@ -30,7 +30,7 @@ public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent e) {
         Messages.registerMessages(Sophia.MODID);
-        //GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
+        GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
         MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
     }
 

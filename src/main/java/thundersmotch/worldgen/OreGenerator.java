@@ -30,7 +30,7 @@ public class OreGenerator implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        //generateWorld(random, chunkX, chunkZ, world, true);
+        generateWorld(random, chunkX, chunkZ, world, true);
     }
 
     public void generateWorld(Random random, int chunkX, int chunkZ, World world, boolean newGen){
@@ -86,7 +86,6 @@ public class OreGenerator implements IWorldGenerator {
 
         if (tag != null){
             boolean generate = ConfigOres.RETROGEN && !tag.hasKey("generated");
-            Sophia.logger.log(Level.WARN, "Gen:" + generate);
             if (generate){
                 if (ConfigOres.VERBOSE){
                     Sophia.logger.log(Level.DEBUG, "Queueing Retrogen for chunk: " + coord.toString() + ".");
