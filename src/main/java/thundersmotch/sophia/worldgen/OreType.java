@@ -1,4 +1,4 @@
-package thundersmotch.worldgen;
+package thundersmotch.sophia.worldgen;
 
 import net.minecraft.util.IStringSerializable;
 

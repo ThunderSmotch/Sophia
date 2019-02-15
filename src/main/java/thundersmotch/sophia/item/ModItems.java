@@ -18,6 +18,7 @@ public class ModItems {
 
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().register(new ItemBlock(ModBlocks.blockIronFurnace).setRegistryName(ModBlocks.blockIronFurnace.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(ModBlocks.blockGenerator).setRegistryName(ModBlocks.blockGenerator.getRegistryName()));
         event.getRegistry().register(new ItemBlock(ModBlocks.blockCopperOre){
             @Override
             public int getMetadata(int damage) {

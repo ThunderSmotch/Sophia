@@ -1,12 +1,16 @@
 package thundersmotch.sophia.proxy;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ListenableFuture;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.animation.ITimeValue;
+import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -21,9 +25,10 @@ import thundersmotch.sophia.block.ModBlocks;
 import thundersmotch.sophia.gui.GuiHandler;
 import thundersmotch.sophia.item.ModItems;
 import thundersmotch.sophia.network.Messages;
-import thundersmotch.sophia.block.iron_furnace.TileIronFurnace;
-import thundersmotch.worldgen.OreGenerator;
-import thundersmotch.worldgen.WorldTickHandler;
+import thundersmotch.sophia.worldgen.OreGenerator;
+import thundersmotch.sophia.worldgen.WorldTickHandler;
+
+import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
@@ -41,19 +46,26 @@ public class CommonProxy {
     }
 
     public void postInit(FMLPostInitializationEvent e) {
+        //SMELTING
         GameRegistry.addSmelting(ModBlocks.blockCopperOre, new ItemStack(ModItems.itemCopperIngot, 1), 0.0f);
+
+        //ORE DICT
         OreDictionary.registerOre("oreCopper", ModBlocks.blockCopperOre);
     }
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         ModBlocks.registerBlocks(event);
-        GameRegistry.registerTileEntity(TileIronFurnace.class, new ResourceLocation(Sophia.MODID, "iron_furnace"));
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         ModItems.registerItems(event);
+    }
+
+    @Nullable
+    public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters){
+        return null;
     }
 
     public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule){

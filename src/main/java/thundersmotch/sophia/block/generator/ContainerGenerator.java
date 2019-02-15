@@ -1,4 +1,4 @@
-package thundersmotch.sophia.block.iron_furnace;
+package thundersmotch.sophia.block.generator;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,39 +10,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import thundersmotch.sophia.block.iron_furnace.ConfigIronFurnace;
+import thundersmotch.sophia.block.iron_furnace.TileIronFurnace;
 import thundersmotch.sophia.network.Messages;
 import thundersmotch.sophia.network.PacketSyncMachine;
 import thundersmotch.sophia.tools.IMachineStateContainer;
 
-public class ContainerIronFurnace extends Container implements IMachineStateContainer {
+public class ContainerGenerator extends Container implements IMachineStateContainer {
 
-    private TileIronFurnace te;
+    private TileGenerator te;
 
-    private static final int PROGRESS_ID = 0;
-
-    public ContainerIronFurnace(IInventory playerInventory, TileIronFurnace te){
+    public ContainerGenerator(IInventory playerInventory, TileGenerator te){
         this.te = te;
 
         //Defines the te's slots and the player slots
-        addOwnSlots();
         addPlayerSlots(playerInventory);
-    }
-
-    private void addOwnSlots() {
-        IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int x = 10;
-        int y = 26;
-
-        //Add furnace slots
-        int slotIndex = 0;
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex++, x, y)); x+= 18;
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex++, x, y)); x+= 18;
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex++, x, y));
-
-        x = 118;
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex++, x, y)); x+= 18;
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex++, x, y)); x+= 18;
-        addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
     }
 
     private void addPlayerSlots(IInventory playerInventory) {
@@ -64,33 +46,6 @@ public class ContainerIronFurnace extends Container implements IMachineStateCont
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-
-        if(slot != null && slot.getHasStack()){
-            ItemStack itemStack1 = slot.getStack();
-            itemStack = itemStack1.copy();
-
-            //Shift clicking from the te slots
-            if(index < TileIronFurnace.SIZE){
-                if (!this.mergeItemStack(itemStack1, TileIronFurnace.SIZE, this.inventorySlots.size(), true))
-                    return ItemStack.EMPTY;
-            } //Shift clicking from the inventory
-            else if (!this.mergeItemStack(itemStack1, 0, TileIronFurnace.SIZE, false)){
-                return ItemStack.EMPTY;
-            }
-
-            if (itemStack1.isEmpty())
-                slot.putStack(ItemStack.EMPTY);
-            else
-                slot.onSlotChanged();
-        }
-
-        return itemStack;
-    }
-
-    @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
         return te.canInteractWith(entityPlayer);
     }
@@ -98,11 +53,7 @@ public class ContainerIronFurnace extends Container implements IMachineStateCont
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-
-        if (te.getWorld().isRemote){
-            return;
-        }
-
+        /*
         if(te.getEnergy() != te.getClientEnergy() || te.getProgress() != te.getClientProgress()){
 
             te.setClientEnergy(te.getEnergy());
@@ -115,12 +66,17 @@ public class ContainerIronFurnace extends Container implements IMachineStateCont
                     Messages.INSTANCE.sendTo(new PacketSyncMachine(te.getEnergy(), pct), player);
                 }
             }
-        }
+        }*/
+    }
+
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        return ItemStack.EMPTY;
     }
 
     @Override
     public void sync(int energy, int progress) {
-        te.setClientEnergy(energy);
-        te.setClientProgress(progress);
+        // te.setClientEnergy(energy);
+        // te.setClientProgress(progress);
     }
 }

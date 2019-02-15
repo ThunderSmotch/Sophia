@@ -24,7 +24,7 @@ public class ConfigGeneral {
         @Config.Name((char)0xE000 + "Ores")
         public static ConfigOres ore;
 
-        @Config.LangKey("config.sophia.iron_furnace")
+        @Config.LangKey("config.sophia.blockIronFurnace")
         @Config.Name((char)0xE001 + "Iron Furnace")
         public static ConfigIronFurnace ironFurnace;
 

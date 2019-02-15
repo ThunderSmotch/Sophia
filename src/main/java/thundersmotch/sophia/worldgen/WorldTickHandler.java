@@ -1,4 +1,4 @@
-package thundersmotch.worldgen;
+package thundersmotch.sophia.worldgen;
 
 import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraft.util.math.ChunkPos;
