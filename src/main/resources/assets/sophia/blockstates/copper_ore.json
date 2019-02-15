@@ -1,0 +1,12 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}],
+    "oretype": {
+      "overworld": {"model": "cube_all", "textures": {"all": "sophia:blocks/ore/copper_ore"}},
+      "nether": {"model": "cube_all", "textures": {"all": "sophia:blocks/ore/copper_nether_ore"}},
+      "end": {"model": "cube_all", "textures": {"all": "sophia:blocks/ore/copper_end_ore"}}
+    }
+  }
+}

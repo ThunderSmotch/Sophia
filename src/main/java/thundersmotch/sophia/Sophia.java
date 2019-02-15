@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
-import thundersmotch.sophia.block.ModBlocks;
+import thundersmotch.sophia.item.ModItems;
 import thundersmotch.sophia.proxy.CommonProxy;
 
 @Mod(modid = Sophia.MODID, name = Sophia.NAME, version = Sophia.VERSION)
@@ -30,7 +30,7 @@ public class Sophia
 
     public static CreativeTabs creativeTab = new CreativeTabs("sophia") {
         @Override
-        public ItemStack getTabIconItem() {return new ItemStack(ModBlocks.blockIronFurnace);}
+        public ItemStack createIcon() {return new ItemStack(ModItems.itemEncyclopedia);}
     };
 
     @EventHandler

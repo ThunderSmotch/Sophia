@@ -3,12 +3,13 @@
   "defaults": {
     "model": "cube",
     "textures": {
-      "north": "sophia:blocks/iron_furnace",
-      "south": "sophia:blocks/iron_furnace_side",
-      "west": "sophia:blocks/iron_furnace_side",
-      "east": "sophia:blocks/iron_furnace_side",
-      "up": "sophia:blocks/iron_furnace_up",
-      "down": "sophia:blocks/iron_furnace_down"
+      "particle": "sophia:blocks/iron_furnace/iron_furnace",
+      "north": "sophia:blocks/iron_furnace/iron_furnace",
+      "south": "sophia:blocks/iron_furnace/iron_furnace_side",
+      "west": "sophia:blocks/iron_furnace/iron_furnace_side",
+      "east": "sophia:blocks/iron_furnace/iron_furnace_side",
+      "up": "sophia:blocks/iron_furnace/iron_furnace_up",
+      "down": "sophia:blocks/iron_furnace/iron_furnace_down"
     }
   },
   "variants": {
@@ -21,6 +22,11 @@
       "east":{"y": 90},
       "up": {"x": -90},
       "down":{"x": 90}
+    },
+    "state": {
+      "off": {},
+      "working": {"textures": {"north": "sophia:blocks/iron_furnace/iron_furnace_working"}},
+      "nopower": {"textures": {"north": "sophia:blocks/iron_furnace/iron_furnace_nopower"}}
     }
   }
 }

@@ -31,8 +31,7 @@ public class GuiIronFurnace extends GuiContainer {
         drawEnergyBar(energy);
 
         if (furnace.getClientProgress() > 0){
-            int percentage = 100 - furnace.getClientProgress()*100/TileIronFurnace.MAX_PROGRESS;
-            drawString(mc.fontRenderer, "Progress: " + percentage + "%", guiLeft+10, guiTop+50, 0xffffff);
+            drawString(mc.fontRenderer, "Progress: " + furnace.getClientProgress() + "%", guiLeft+10, guiTop+50, 0xffffff);
         }
     }
 
@@ -50,7 +49,7 @@ public class GuiIronFurnace extends GuiContainer {
     //Draws the energy bar (alternating red and black bars)
     private void drawEnergyBar(int energy){
         drawRect(guiLeft+10, guiTop+5, guiLeft+112, guiTop+15, 0xff555555);
-        int percentage = energy * 100 / TileIronFurnace.MAX_POWER;
+        int percentage = energy * 100 / ConfigIronFurnace.MAX_POWER;
         for (int i = 0; i < percentage; i++){
             drawVerticalLine(guiLeft+10+1+i, guiTop+5, guiTop+14, i % 2 == 0 ? 0xffff0000 : 0xff000000);
         }

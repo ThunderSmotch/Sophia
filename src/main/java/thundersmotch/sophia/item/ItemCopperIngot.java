@@ -8,10 +8,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thundersmotch.sophia.Sophia;
 
-public class ItemEncyclopedia extends Item {
-    public ItemEncyclopedia(){
-        setRegistryName(new ResourceLocation(Sophia.MODID, "encyclopedia"));
-        setTranslationKey(Sophia.MODID + ".encyclopedia");
+public class ItemCopperIngot extends Item {
+    public ItemCopperIngot(){
+        setRegistryName(new ResourceLocation(Sophia.MODID, "copper_ingot"));
+        setTranslationKey(Sophia.MODID + ".copper_ingot");
         setCreativeTab(Sophia.creativeTab);
     }
 

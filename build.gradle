@@ -36,12 +36,12 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.5.2811"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "stable_39"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 dependencies {
-    deobfCompile "mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2"
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}"
 	// compile against the JEI API but do not include it at runtime
 	deobfProvided "mezz.jei:jei_${mc_version}:${jei_version}:api"
   	// at runtime, use the full JEI jar

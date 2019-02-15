@@ -1,9 +1,12 @@
 package thundersmotch.sophia.block.iron_furnace;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -15,6 +18,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import thundersmotch.sophia.tools.ModEnergyStorage;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileIronFurnace extends TileEntity implements ITickable {
 
@@ -22,23 +26,23 @@ public class TileIronFurnace extends TileEntity implements ITickable {
     public static final int OUTPUT_SLOTS = 3;
     public static final int SIZE = INPUT_SLOTS + OUTPUT_SLOTS;
 
-    public static final int MAX_PROGRESS = 40;
-    public static final int MAX_POWER = 100000;
-    public static final int RF_PER_TICK = 20;
-    public static final int RF_PER_TICK_INPUT = 100;
-
+    private FurnaceState state = FurnaceState.OFF;
     private int progress = 0;
+
     private int clientProgress = -1;
     private int clientEnergy = -1;
 
     @Override
     public void update() {
         if (!world.isRemote){
-            if (energyStorage.getEnergyStored() < RF_PER_TICK)
+            if (energyStorage.getEnergyStored() < ConfigIronFurnace.RF_PER_TICK){
+                setState(FurnaceState.NOPOWER);
                 return;
+            }
 
             if (progress > 0){
-                energyStorage.consumePower(RF_PER_TICK);
+                setState(FurnaceState.WORKING);
+                energyStorage.consumePower(ConfigIronFurnace.RF_PER_TICK);
                 progress--;
                 if (progress <= 0)
                     attemptSmelt();
@@ -64,12 +68,14 @@ public class TileIronFurnace extends TileEntity implements ITickable {
             ItemStack result = FurnaceRecipes.instance().getSmeltingResult(inputHandler.getStackInSlot(i));
             if(!result.isEmpty()){
                 if(insertOutput(result.copy(), true)){
-                    progress = MAX_PROGRESS;
+                    setState(FurnaceState.WORKING);
+                    progress = ConfigIronFurnace.MAX_PROGRESS;
                     markDirty();
+                    return;
                 }
-                break;
             }
         }
+        setState(FurnaceState.OFF);
     }
 
     private void attemptSmelt(){
@@ -106,6 +112,42 @@ public class TileIronFurnace extends TileEntity implements ITickable {
 
     public int getEnergy(){ return energyStorage.getEnergyStored(); }
 
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        NBTTagCompound nbtTag = super.getUpdateTag();
+        nbtTag.setInteger("state", state.ordinal());
+        return nbtTag;
+    }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(pos, 1, getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        int stateIndex = pkt.getNbtCompound().getInteger("state");
+
+        if (world.isRemote && stateIndex != state.ordinal()){
+            state = FurnaceState.VALUES[stateIndex];
+            world.markBlockRangeForRenderUpdate(pos, pos);
+        }
+    }
+
+    public void setState(FurnaceState state){
+        if (this.state != state){
+            this.state = state;
+            markDirty();
+            IBlockState blockState = world.getBlockState(pos);
+            getWorld().notifyBlockUpdate(pos, blockState, blockState, 3);
+        }
+    }
+
+    public FurnaceState getState(){
+        return state;
+    }
+
     public boolean canInteractWith(EntityPlayer playerIn){
         //If we are too far away from the te then you cannot use it
         return !isInvalid() && (playerIn.getDistanceSq(pos.add(0.5D, 0.5D,0.5D)) <= 64D);
@@ -113,7 +155,7 @@ public class TileIronFurnace extends TileEntity implements ITickable {
 
     // -----------------------------------------------------------------
 
-    private ModEnergyStorage energyStorage = new ModEnergyStorage(MAX_POWER, RF_PER_TICK_INPUT);
+    private ModEnergyStorage energyStorage = new ModEnergyStorage(ConfigIronFurnace.MAX_POWER, ConfigIronFurnace.MAX_RF_INPUT);
 
     // -----------------------------------------------------------------
 
@@ -148,6 +190,11 @@ public class TileIronFurnace extends TileEntity implements ITickable {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
+        readRestorableFromNBT(compound);
+        state = FurnaceState.VALUES[compound.getInteger("state")];
+    }
+
+    public void readRestorableFromNBT(NBTTagCompound compound){
         if(compound.hasKey("itemsIn")){
             inputHandler.deserializeNBT((NBTTagCompound) compound.getTag("itemsIn"));
         }
@@ -161,11 +208,16 @@ public class TileIronFurnace extends TileEntity implements ITickable {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
+        writeRestorableToNBT(compound);
+        compound.setInteger("state", state.ordinal());
+        return compound;
+    }
+
+    public void writeRestorableToNBT(NBTTagCompound compound){
         compound.setTag("itemsIn", inputHandler.serializeNBT());
         compound.setTag("itemsOut", outputHandler.serializeNBT());
         compound.setInteger("progress", progress);
         compound.setInteger("energy", energyStorage.getEnergyStored());
-        return compound;
     }
 
     @Override
