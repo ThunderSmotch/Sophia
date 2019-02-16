@@ -17,4 +17,11 @@ public class ModEnergyStorage extends EnergyStorage {
         if (this.energy < 0)
             this.energy = 0;
     }
+
+    public void generatePower(int energy){
+        this.energy += energy;
+        if (this.energy > capacity){
+            this.energy = capacity;
+        }
+    }
 }

@@ -70,3 +70,10 @@ config.sophia.iron_furnace.max_rf_input.tooltip=Maximum RF that can be inputted
 config.sophia.iron_furnace.rf_per_tick=RF per tick
 config.sophia.iron_furnace.rf_per_tick.tooltip=RF per tick needed to work
 
+config.sophia.generator=Generator
+config.sophia.generator.tooltip=Generator Settings
+config.sophia.generator.max_power=Max Power
+config.sophia.generator.max_power.tooltip=Maximum RF stored inside
+config.sophia.generator.power_damage_factor=Power Damage Factor
+config.sophia.generator.power_damage_factor.tooltip=Controls how much power is generated per damage unit
+

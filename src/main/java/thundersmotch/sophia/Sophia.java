@@ -5,10 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.Logger;
+import thundersmotch.sophia.block.generator.DamageTracker;
 import thundersmotch.sophia.item.ModItems;
 import thundersmotch.sophia.proxy.CommonProxy;
 
@@ -47,5 +46,15 @@ public class Sophia
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+    }
+
+    @EventHandler
+    public void serverStopped(FMLServerStoppedEvent event){
+        DamageTracker.instance.reset();
+    }
+
+    @EventHandler
+    public void serverStarted(FMLServerStartedEvent event){
+        DamageTracker.instance.reset();
     }
 }

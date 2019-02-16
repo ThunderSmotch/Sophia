@@ -30,12 +30,9 @@ public class GuiGenerator extends GuiContainer {
         mc.getTextureManager().bindTexture(background);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        int energy = 0; //blockGenerator.getClientEnergy();
+        int energy = generator.getClientEnergy();
         drawEnergyBar(energy);
 
-//        if (furnace.getClientProgress() > 0){
-//            drawString(mc.fontRenderer, "Progress: " + furnace.getClientProgress() + "%", guiLeft+10, guiTop+50, 0xffffff);
-//        }
     }
 
     @Override
@@ -45,7 +42,7 @@ public class GuiGenerator extends GuiContainer {
         renderHoveredToolTip(mouseX, mouseY);
 
         if(mouseX > guiLeft+10 && mouseX < guiLeft+112 && mouseY >  guiTop + 5 && mouseY < guiTop + 15){
-            //drawHoveringText(Collections.singletonList("Energy: " + furnace.getClientEnergy()), mouseX, mouseY, fontRenderer);
+            drawHoveringText(Collections.singletonList("Energy: " + generator.getClientEnergy()), mouseX, mouseY, fontRenderer);
         }
     }
 

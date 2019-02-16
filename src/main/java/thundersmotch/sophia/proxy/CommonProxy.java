@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import thundersmotch.sophia.Sophia;
 import thundersmotch.sophia.block.ModBlocks;
+import thundersmotch.sophia.block.generator.DamageTracker;
 import thundersmotch.sophia.gui.GuiHandler;
 import thundersmotch.sophia.item.ModItems;
 import thundersmotch.sophia.network.Messages;
@@ -42,6 +43,7 @@ public class CommonProxy {
     public void init(FMLInitializationEvent e) {
         NetworkRegistry.INSTANCE.registerGuiHandler(Sophia.instance, new GuiHandler());
 
+        MinecraftForge.EVENT_BUS.register(DamageTracker.instance);
         MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
     }
 
