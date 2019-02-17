@@ -23,6 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import thundersmotch.sophia.Sophia;
 import thundersmotch.sophia.block.ModBlocks;
 import thundersmotch.sophia.block.generator.DamageTracker;
+import thundersmotch.sophia.entity.ModEntities;
 import thundersmotch.sophia.gui.GuiHandler;
 import thundersmotch.sophia.item.ModItems;
 import thundersmotch.sophia.network.Messages;
@@ -38,6 +39,8 @@ public class CommonProxy {
         Messages.registerMessages(Sophia.MODID);
         GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
         MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
+
+        ModEntities.init();
     }
 
     public void init(FMLInitializationEvent e) {

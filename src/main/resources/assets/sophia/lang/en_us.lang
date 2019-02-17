@@ -10,6 +10,9 @@ item.sophia.encyclopedia.name=Encyclopedia Minecraftica
 item.sophia.copper_ingot.name=Copper Ingot
 #
 #
+
+entity.sophia_guard.name=Guard
+
 ######MISC
 key.categories.sophia=Sophia
 itemGroup.sophia=Sophia
